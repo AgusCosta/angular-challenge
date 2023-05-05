@@ -1,59 +1,80 @@
 <ng-container *ngIf="!isLoading">
-	<div class="jumbotron flex justify-content-space-between align-items-center">
-		<form
-			class="filters flex justify-content-space-between align-items-center"
-			[formGroup]="searchForm"
-		>
-			<mat-form-field appearance="outline">
-				<mat-label>Spirits Finder</mat-label>
-				<input
-					type="text"
-					placeholder="Brand, Style, ABV, Origin..."
-					aria-label="Spirits Finder"
-					matInput
-					formControlName="searchControl"
-				/>
-				<mat-icon
-					[style.margin]="'0 15px'"
-					matPrefix
-					class="material-symbols-outlined"
-				>
-					search
-				</mat-icon>
-			</mat-form-field>
+  <form
+    class="filters flex justify-content-space-between align-items-center"
+    [formGroup]="searchForm"
+  >
+    <div class="search-form-field">
+      <mat-form-field appearance="outline">
+        <mat-label>Spirits Finder</mat-label>
+        <input
+          type="text"
+          placeholder="Brand, Style, ABV, Origin..."
+          aria-label="Spirits Finder"
+          matInput
+          formControlName="searchControl"
+        />
+        <mat-icon
+          [style.margin]="'0 15px'"
+          matPrefix
+          class="material-symbols-outlined"
+        >
+          search
+        </mat-icon>
+      </mat-form-field>
+    </div>
 
-			<div class="category-buttons flex justify-content-flex-end align-items-center">
-				<button
-					class="category-button flex justify-content-space-between align-items-center"
-					*ngFor="let category of drinkCategories"
-					(click)="changeCategory(category)"
-					[class.category-active]="category.label === selectedCategory.label"
-				>
-					<img
-						alt=""
-						class="example-option-img"
-						[src]="'../../../../../../../assets/icons/' + category.img"
-					/>
-					{{ category.label | titlecase }}
-				</button>
-			</div>
-		</form>
-	</div>
+    <div
+      class="category-buttons flex justify-content-flex-end align-items-center"
+    >
+      <button
+        class="category-button flex justify-content-space-between align-items-center"
+        *ngFor="let category of drinkCategories"
+        (click)="changeCategory(category)"
+        [class.category-active]="category.label === selectedCategory.label"
+      >
+        <img
+          alt=""
+          class="example-option-img"
+          [src]="'../../../../../../../assets/icons/' + category.img"
+        />
+        {{ category.label | titlecase }}
+      </button>
+    </div>
+  </form>
 
-	<div class="product-container flex flex-direction-column justify-content-flex-start align-items-center">
-		<ng-container *ngIf="selectedCategory.label !== 'Wine'">
-			<app-product-card
-				*ngFor="let product of filteredProducts | async; let i = index"
-				[product]="product"
-				[animationDelay]="i"
-				[stockList]="stockList"
-			></app-product-card>
-		</ng-container>
-	</div>
+  <div
+    class="product-container flex flex-direction-column justify-content-flex-start align-items-center"
+    *ngIf="filteredProducts | async as products"
+  >
+    <ng-container
+      *ngIf="
+        selectedCategory.label !== 'Wine' && products.length;
+        else noProductsFound
+      "
+    >
+      <app-product-card
+        *ngFor="let product of products; let i = index"
+        [product]="product"
+        [animationDelay]="i"
+      ></app-product-card>
+    </ng-container>
+  </div>
 </ng-container>
 
-<mat-spinner
-	diameter="200"
-	strokeWidth="6"
-	*ngIf="isLoading"
-></mat-spinner>
+<ng-template #noProductsFound>
+  <div
+    class="no-products-found flex flex-direction-column justify-content-flex-start align-items-center"
+  >
+    <img
+      src="../../../../../assets/no-product-found.png"
+      alt="no-product-found"
+    />
+    <h1 class="title">No product found :(</h1>
+    <p>
+      We couldn't find any products that match your selected filters. Please try
+      different filters or explore our website for other products.
+    </p>
+  </div>
+</ng-template>
+
+<mat-spinner diameter="200" strokeWidth="6" *ngIf="isLoading"></mat-spinner>

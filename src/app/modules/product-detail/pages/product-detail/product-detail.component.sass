@@ -40,7 +40,10 @@
     .product-img
         width: 25%
         max-height: 500px
+        opacity: 0
         object-fit: contain
+        animation: displayImg 200ms 100ms ease-in forwards
+
 
     .product-data
         width: 75%
@@ -72,7 +75,6 @@
                 .label
                     padding: 5px 15px
                     border-radius: 6px
-                    @include mat-elevation(1)
                     font-weight: 400
                     margin-right: 10px
                     background-color: $app-orange-color
@@ -151,3 +153,12 @@
     100%        
         opacity: 1
         transform: translateY(0px)
+
+@keyframes displayImg
+    0%
+        opacity: 0
+        transform: translateX(-15px)
+
+    100%        
+        opacity: 1
+        transform: translateX(0px)
