@@ -1,0 +1,84 @@
+<div class="jumbotron flex justify-content-space-between align-items-center">
+  <form
+    class="filters flex justify-content-space-between align-items-center"
+    [formGroup]="searchForm"
+  >
+    <mat-form-field appearance="outline">
+      <mat-label>Beer Finder</mat-label>
+      <input
+        type="text"
+        placeholder="Brand, Style, ABV, Origin..."
+        aria-label="Beer Finder"
+        matInput
+        formControlName="searchControl"
+      />
+      <mat-icon
+        [style.margin]="'0 15px'"
+        matPrefix
+        class="material-symbols-outlined"
+      >
+        search
+      </mat-icon>
+    </mat-form-field>
+
+    <div
+      class="category-buttons flex justify-content-flex-end align-items-center"
+    >
+      <button
+        class="category-button flex justify-content-space-between align-items-center"
+        *ngFor="let category of drinkCategories"
+        (click)="changeCategory(category)"
+        [class.category-active]="category.label === selectedCategory.label"
+      >
+        <img
+          alt=""
+          class="example-option-img"
+          [src]="'../../../../../../../assets/icons/' + category.img"
+        />
+        {{ category.label | titlecase }}
+      </button>
+    </div>
+  </form>
+</div>
+
+<div
+  class="product-container flex flex-direction-column justify-content-flex-start align-items-center"
+>
+  <ng-container *ngIf="selectedCategory.label !== 'Wine'">
+    <a
+      class="product flex justify-content-space-around align-items-center"
+      *ngFor="let product of filteredProducts | async; let i = index"
+      [style.animation-delay]="i + '00ms'"
+      [routerLink]="getProductLink(product)"
+    >
+      <img
+        class="product-img"
+        [src]="'assets' + product.image"
+        [alt]="product.brand"
+      />
+
+      <div
+        class="product-data flex flex-direction-column justify-content-center align-items-flex-start"
+      >
+        <div
+          class="title flex justify-content-space-between align-items-flex-end"
+        >
+          <div
+            class="label-container flex justify-content-flex-start align-items-center"
+          >
+            <span class="label">{{ product.brand }}</span>
+            <span class="label">{{ product.style }}</span>
+            <span class="label">{{ product.substyle }}</span>
+            <span class="label">{{ product.abv }}</span>
+            <span class="label">{{ product.origin }}</span>
+          </div>
+          <div class="price">$45.65</div>
+        </div>
+
+        <p class="info">
+          {{ product.information }}
+        </p>
+      </div>
+    </a>
+  </ng-container>
+</div>

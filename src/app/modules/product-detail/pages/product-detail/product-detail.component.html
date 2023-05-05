@@ -1,0 +1,35 @@
+<div
+  class="product-container flex justify-content-center align-items-flex-start"
+>
+  <div
+    class="product flex justify-content-space-between align-items-stretch"
+    *ngIf="product"
+  >
+    <img
+      class="product-img"
+      [src]="'assets' + product.image"
+      [alt]="product.brand"
+    />
+
+    <div
+      class="product-data flex flex-direction-column justify-content-center align-items-stretch"
+    >
+      <div
+        class="product-title flex justify-content-space-between align-items-center"
+      >
+        <span class="brand">{{ product.brand | titlecase }}</span>
+
+        <div class="labels">
+          <span class="label">{{ product.style }}</span>
+          <span class="label">{{ product.substyle }}</span>
+          <span class="label">{{ product.abv }}</span>
+          <span class="label">{{ product.origin }}</span>
+        </div>
+      </div>
+
+      <p class="info">
+        {{ product.information }}
+      </p>
+    </div>
+  </div>
+</div>

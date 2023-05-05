@@ -1,0 +1,43 @@
+@import '@angular/material/theming'
+
+    
+.product-container
+    width: 100%
+    padding: 15px
+
+    .product
+        width: 50%
+        background-color: white
+        border-radius: 10px
+        padding: 25px
+        overflow: hidden
+        @include mat-elevation(1)
+
+        .product-img
+            width: 25%
+            object-fit: contain
+
+        .product-data
+            width: 75%
+
+            .brand
+                font-size: 30px
+                font-weight: 500
+
+            .labels
+
+                .label
+                    font-size: 14px
+                    font-weight: 500
+                    margin-left: 10px
+                    @include mat-elevation(2)
+                    padding: 5px 10px
+                    border-radius: 10px
+
+                    &:first-child
+                        margin-left: 0
+
+        .info
+            display: block
+            margin-top: 25px
+            font-size: 14px
