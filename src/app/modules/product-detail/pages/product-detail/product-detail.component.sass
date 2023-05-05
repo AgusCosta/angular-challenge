@@ -1,43 +1,153 @@
 @import '@angular/material/theming'
+@import 'variables'
 
-    
-.product-container
+.product
     width: 100%
-    padding: 15px
+    background-color: white
+    border-radius: 6px
+    margin: 25px 0
+    padding: 25px
+    overflow: hidden
+    position: relative
+    @include mat-elevation(1)
+    animation: displayProduct 250ms ease-in forwards
 
-    .product
-        width: 50%
-        background-color: white
-        border-radius: 10px
-        padding: 25px
+    .back-btn
+        position: absolute
+        top: 25px
+        right: 25px
+        text-decoration: none
+        color: $app-orange-color
+        font-size: 14px
+        font-weight: 400
+        border: thin solid $app-orange-color
+        padding: 5px 10px
+        border-radius: 6px
         overflow: hidden
-        @include mat-elevation(1)
 
-        .product-img
-            width: 25%
-            object-fit: contain
+        .label
+            display: none
+            margin-left: 10px
+            white-space: nowrap
+            overflow: hidden
+            animation: displayGoBackLabel 150ms ease-in forwards
+        
+        &:hover
+            .label
+                display: block
 
-        .product-data
-            width: 75%
 
-            .brand
-                font-size: 30px
-                font-weight: 500
+    .product-img
+        width: 25%
+        max-height: 500px
+        object-fit: contain
+
+    .product-data
+        width: 75%
+
+        .product-title
+            margin-bottom: 25px
+
+            .brand-data
+
+                .brand
+                    font-size: 30px
+                    font-weight: 500
+                    color: #323232
+
+                    .price
+                        color: $app-orange-color
+                        margin-left: 10px
+
+                .origin-stock
+                    color: #969696
+                    font-size: 14px
+                    font-weight: 400
+                    
+                    .divider
+                        margin: 0 3px
 
             .labels
 
                 .label
-                    font-size: 14px
-                    font-weight: 500
-                    margin-left: 10px
-                    @include mat-elevation(2)
-                    padding: 5px 10px
-                    border-radius: 10px
+                    padding: 5px 15px
+                    border-radius: 6px
+                    @include mat-elevation(1)
+                    font-weight: 400
+                    margin-right: 10px
+                    background-color: $app-orange-color
+                    color: white
 
-                    &:first-child
-                        margin-left: 0
+                    &:last-child
+                        margin-right: 0
 
-        .info
-            display: block
-            margin-top: 25px
+    .info-title
+        font-size: 20px
+        font-weight: 500
+        color: #323232
+        margin-bottom: 10px
+
+    .info
+        font-size: 14px
+        color: #323232
+        margin-bottom: 25px
+
+    .cart
+
+        .stock           
+
+            .stock-price-btn
+                cursor: pointer
+                background-color: transparent
+                padding: 5px 10px
+                border: thin solid #969696
+                color: #969696
+                margin-right: 10px
+                font-size: 14px
+                font-weight: 400
+                border-radius: 20px
+                transition-duration: 150ms
+
+                &:hover
+                    color: $app-orange-color
+                    border-color: $app-orange-color
+
+                &:last-child
+                    margin-right: 0
+            
+            .stock-active
+                color: $app-orange-color
+                border-color: $app-orange-color
+
+        .cart-btn
+            cursor: pointer
+            background-color: $app-orange-color
+            color: white
             font-size: 14px
+            font-weight: 400
+            padding: 10px 30px
+            border-radius: 10px
+            border: none
+            outline: none
+            transition-duration: 150ms
+
+            &:hover
+                background-color: darken($app-orange-color, 5)
+
+@keyframes displayGoBackLabel
+    0%
+        opacity: 0
+        width: 0
+
+    100%        
+        opacity: 1
+        width: 65px
+
+@keyframes displayProduct
+    0%
+        opacity: 0
+        transform: translateY(-15px)
+
+    100%        
+        opacity: 1
+        transform: translateY(0px)

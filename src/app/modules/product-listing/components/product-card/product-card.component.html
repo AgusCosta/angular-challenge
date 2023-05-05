@@ -1,0 +1,36 @@
+<a
+	class="product flex justify-content-space-around align-items-center"
+	[style.animation-delay]="animationDelay + '00ms'"
+	[routerLink]="getProductLink(product)"
+>
+	<img
+		class="product-img"
+		[src]="'assets' + product.image"
+		[alt]="product.brand"
+	/>
+
+	<div class="product-data flex flex-direction-column justify-content-center align-items-flex-start">
+		<div class="title flex justify-content-space-between align-items-flex-end">
+			<span class="brand">{{ product.brand }}</span>
+			<div class="label-container flex justify-content-flex-start align-items-center">
+				<span class="label">{{ product.style }}</span>
+				<span class="label">{{ product.substyle }}</span>
+				<span class="label">ABV: {{ product.abv }}</span>
+				<span class="label">{{ product.origin }}</span>
+			</div>
+		</div>
+
+		<p class="info">
+			{{ product.information }}
+		</p>
+
+		<div class="stock justify-content-flex-end align-items-center">
+			<div
+				class="stock-price"
+				*ngFor="let stock of stockPrice"
+			>
+				{{ stock.sku.name }} - <strong>{{ stock.stock.price / 100 | currency : 'USD' }}</strong>
+			</div>
+		</div>
+	</div>
+</a>

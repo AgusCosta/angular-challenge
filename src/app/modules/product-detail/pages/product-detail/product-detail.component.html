@@ -1,35 +1,69 @@
 <div
-  class="product-container flex justify-content-center align-items-flex-start"
+	class="product flex justify-content-space-between align-items-stretch"
+	*ngIf="product && !isLoading"
 >
-  <div
-    class="product flex justify-content-space-between align-items-stretch"
-    *ngIf="product"
-  >
-    <img
-      class="product-img"
-      [src]="'assets' + product.image"
-      [alt]="product.brand"
-    />
+	<img
+		class="product-img"
+		[src]="'assets' + product.image"
+		[alt]="product.brand"
+	/>
 
-    <div
-      class="product-data flex flex-direction-column justify-content-center align-items-stretch"
-    >
-      <div
-        class="product-title flex justify-content-space-between align-items-center"
-      >
-        <span class="brand">{{ product.brand | titlecase }}</span>
+	<div class="product-data flex flex-direction-column justify-content-center align-items-stretch">
+		<h1 class="info-title">Detail</h1>
 
-        <div class="labels">
-          <span class="label">{{ product.style }}</span>
-          <span class="label">{{ product.substyle }}</span>
-          <span class="label">{{ product.abv }}</span>
-          <span class="label">{{ product.origin }}</span>
-        </div>
-      </div>
+		<div class="product-title flex justify-content-space-between align-items-center">
+			<div class="brand-data flex flex-direction-column justify-content-flex-start align-items-stretch">
+				<span class="brand">
+					{{ product.brand | titlecase }}
+					<strong class="price">{{ selectedStock.stock.price / 100 | currency : 'USD' }}</strong></span
+				>
+				<span class="origin-stock">
+					Origin: {{ product.origin }} <span class="divider">|</span> Stock: {{ selectedStock.stock.stock }}
+				</span>
+			</div>
 
-      <p class="info">
-        {{ product.information }}
-      </p>
-    </div>
-  </div>
+			<div class="labels">
+				<span class="label">{{ product.style }}</span>
+				<span class="label">{{ product.substyle }}</span>
+				<span class="label">{{ product.abv }}</span>
+			</div>
+		</div>
+
+		<h1 class="info-title">Description</h1>
+
+		<p class="info">
+			{{ product.information }}
+		</p>
+
+		<h1 class="info-title">Size</h1>
+
+		<div class="cart flex justify-content-space-between align-items-center">
+			<div class="stock flex justify-content-flex-start align-items-center">
+				<button
+					class="stock-price-btn"
+					*ngFor="let stock of stockPrice"
+					(click)="selectStock(stock)"
+					[class.stock-active]="stock.sku.code === selectedStock.sku.code"
+				>
+					{{ stock.sku.name }}
+				</button>
+			</div>
+
+			<button class="cart-btn">Add to cart</button>
+		</div>
+	</div>
+
+	<a
+		routerLink="/"
+		class="back-btn flex justify-content-flex-start align-items-center"
+	>
+		<span class="material-symbols-outlined"> arrow_back </span>
+		<span class="label">Go back</span>
+	</a>
 </div>
+
+<mat-spinner
+	diameter="200"
+	strokeWidth="6"
+	*ngIf="isLoading"
+></mat-spinner>
